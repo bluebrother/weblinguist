@@ -122,14 +122,16 @@ table { margin:0px; padding:0px; }
 <body>
 
 <?php
+date_default_timezone_set("UTC");
 if(!isset($inputfile)) {
     $files = glob("lang/*.ts");
     $row = 0;
     echo("<table>\n");
-    echo("<tr class='header'><td><b>Language</b></td><td colspan='3'>Edit</td></tr>");
+    echo("<tr class='header'><td><b>Language</b></td><td>source file timestamp</td><td colspan='3'>Edit</td></tr>");
     foreach($files as $f) {
         echo("<tr class='c" . $row%2 . "'>");
         echo("<td>$f</td>");
+        echo("<td>" . date(DateTime::ISO8601, filemtime($f)) . "</td>");
         echo("<td><a href='$_SERVER[PHP_SELF]?inputfile=$f&amp;show=all'>all strings</a></td>");
         echo("<td><a href='$_SERVER[PHP_SELF]?inputfile=$f&amp;show=unfinished'>unfinished strings</a></td>");
         echo("<td><a href='$_SERVER[PHP_SELF]?inputfile=$f&amp;show=empty'>empty strings</a></td>");
