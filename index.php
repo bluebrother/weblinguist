@@ -71,8 +71,11 @@ function parse_update_xml($tsfile, $mode, $update = 0)
 
 if(array_key_exists('translation', $_POST))
     $inputfile = $_POST['translation'];
-if(array_key_exists('inputfile', $_GET))
+if(array_key_exists('inputfile', $_GET)) {
     $inputfile = $_GET['inputfile'];
+    if(preg_match("/\.\./", $inputfile))
+        die("invalid request!");
+}
 else if(array_key_exists('inputfile', $_POST))
     $inputfile = $_POST['inputfile'];
 
