@@ -57,7 +57,7 @@ function parse_update_xml($tsfile, $mode, $update = 0)
                 if(array_key_exists("translation-$row", $_POST)) {
                     $msg->translation = $_POST["translation-$row"];
                     // unset the "unfinished" translation type if it contains
-                    // any text.
+                    // text.
                     // FIXME: allow the user to control this.
                     if($_POST["translation-$row"] != "")
                         $msg->translation['type'] = "";
@@ -66,6 +66,7 @@ function parse_update_xml($tsfile, $mode, $update = 0)
             $row++;
         }
     }
+    return $row;
 }
 
 if(array_key_exists('translation', $_POST))
@@ -169,11 +170,14 @@ else {
     echo("<input type='hidden' name='update' value='true'/>\n");
     echo("<input type='hidden' name='inputfile' value='$inputfile' />\n");
     echo("<table>\n");
-    parse_update_xml($tsfile, $show);
+    $rows = parse_update_xml($tsfile, $show);
     echo("</table>");
 
-    echo("<input type='submit'/>");
+    if($rows > 0)
+        echo("<input type='submit'/>");
     echo("</form>");
+    if($rows == 0)
+        echo("<b>No matching strings found!</b>");
 }
 ?>
 </body>
