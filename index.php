@@ -110,12 +110,13 @@ else if(array_key_exists('show', $_POST))
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <style class='text/css'>
 .cppclass { background-color:#ccc; text-align:center; }
-.c0 { background-color:#cfc; }
-.c1 { background-color:#ccf; }
+.c0 { background-color:#9abdde; }
+.c1 { background-color:#aacdee; }
 .location { text-size:small; }
 .cr { font-size:x-small; font-color:#ccc; }
-.header { background-color:#aaa; }
-table { margin:0px; padding:0px; }
+.header { background-color:#729fcf; }
+table { margin:0px; padding:0px; border-spacing:0px; }
+td { padding:2px; padding-left:1em; padding-right:1em; }
 </style>
 <title><?php echo("Weblinguist: $title"); ?></title>
 </head>
@@ -127,7 +128,7 @@ if(!isset($inputfile)) {
     $files = glob("lang/*.ts");
     $row = 0;
     echo("<table>\n");
-    echo("<tr class='header'><td><b>Language</b></td><td>source file timestamp</td><td colspan='3'>Edit</td></tr>");
+    echo("<tr class='header'><td><b>Language</b></td><td>source file timestamp</td><td colspan='3'><b>Edit</b></td></tr>");
     foreach($files as $f) {
         echo("<tr class='c" . $row%2 . "'>");
         echo("<td>$f</td>");
