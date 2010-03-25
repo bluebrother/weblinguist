@@ -59,8 +59,10 @@ function parse_update_xml($tsfile, $mode, $update = 0)
                     // unset the "unfinished" translation type if it contains
                     // text.
                     // FIXME: allow the user to control this.
-                    if($_POST["translation-$row"] != "")
-                        $msg->translation['type'] = "";
+                    if($_POST["translation-$row"] != "") {
+                        // to remove an attribute unset() it.
+                        unset($msg->translation['type']);
+                    }
                 }
             }
             $row++;
