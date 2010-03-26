@@ -31,6 +31,28 @@ function create_xml_stats($tsfile)
 }
 
 
+function create_svn_stats($tsfile)
+{
+    // this creates svn stats from the info file for $tsfile.
+    $status['rev'] = 0;
+    $status['date'] = 0;
+    if(!is_file($tsfile . ".info"))
+        return $status;
+    $hdl = fopen($tsfile . ".info", "r");
+    while(!feof($hdl)) {
+        $line = fgets($hdl);
+        if(preg_match('/^Last Changed Rev/', $line))
+            $status['rev'] = trim(preg_replace('/^[a-zA-Z ]+:/', '', $line));
+        else if(preg_match('/^Last Changed Date/', $line))
+            // FIXME: parse date here to allow better formatting.
+            $status['date'] = trim(preg_replace('/^[a-zA-Z ]+:/', '', $line));
+
+    }
+    fclose($hdl);
+    return $status;
+}
+
+
 function parse_update_xml($tsfile, $mode, $update = 0)
 {
     $row = 0;
@@ -161,12 +183,13 @@ if(!isset($inputfile)) {
     $files = glob("lang/*.ts");
     $row = 0;
     echo("<table>\n");
-    echo("<tr class='header'><td><b>Language</b></td><td>source file timestamp</td><td><b>edit</b></td><td>strings</td><td>unfinished</td><td>empty</td><td>Progress</td></tr>\n");
+    echo("<tr class='header'><td><b>Language</b></td><td>translation revision</td><td><b>edit</b></td><td>strings</td><td>unfinished</td><td>empty</td><td>Progress</td></tr>\n");
     foreach($files as $f) {
         $status = create_xml_stats($f);
+        $svnstat = create_svn_stats($f);
         echo("<tr class='c" . $row%2 . "'>\n");
         echo("<td>$f</td>\n");
-        echo("<td>" . date(DateTime::ISO8601, filemtime($f)) . "</td>\n");
+        echo("<td>r" . $svnstat['rev'] . " (" . $svnstat['date'] . ")</td>\n");
         echo("<td><a href='$_SERVER[PHP_SELF]?inputfile=$f&amp;show=unfinished'>edit</a></td>\n");
         echo("<td>" . $status['strings'] . "</td>\n");
         echo("<td>" . $status['unfinished'] . "</td>\n");
