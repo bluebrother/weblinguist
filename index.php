@@ -171,7 +171,8 @@ if(!isset($inputfile)) {
         echo("<td>" . $status['strings'] . "</td>\n");
         echo("<td>" . $status['unfinished'] . "</td>\n");
         echo("<td>" . $status['empty'] . "</td>\n");
-        echo("<td><img src='graph.php?p=" . 100 * ($status['strings'] - $status['unfinished']) / $status['strings'] . "'/></td>\n");
+        $progress = floor(100 * ($status['strings'] - $status['unfinished']) / $status['strings']);
+        echo("<td><img src='graph.php?p=$progress' alt='Translation progress $progress%'/></td>\n");
         echo("</tr>\n");
         $row++;
     }
