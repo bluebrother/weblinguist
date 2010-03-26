@@ -4,6 +4,33 @@
 //
 error_reporting(E_ALL);
 
+
+function create_xml_stats($tsfile)
+{
+    $xml = simplexml_load_file($tsfile);
+    $status['strings'] = 0;
+    $status['empty'] = 0;
+    $status['unfinished'] = 0;
+    // count
+    // - number of source strings
+    // - number of empty destination strings
+    // - number of destination strings maked as unfinished.
+    foreach($xml->children() as $child) {
+        $classname = $child->name;
+        foreach($child->message as $msg) {
+            $status['strings']++;
+            $attributes = $msg->translation->attributes();
+            if($attributes['type'] == "unfinished")
+                $status['unfinished']++;
+            if($msg->translation == "")
+                $status['empty']++;
+        }
+
+    }
+    return $status;
+}
+
+
 function parse_update_xml($tsfile, $mode, $update = 0)
 {
     $row = 0;
@@ -136,12 +163,13 @@ if(!isset($inputfile)) {
     echo("<table>\n");
     echo("<tr class='header'><td><b>Language</b></td><td>source file timestamp</td><td colspan='3'><b>Edit</b></td></tr>");
     foreach($files as $f) {
+        $status = create_xml_stats($f);
         echo("<tr class='c" . $row%2 . "'>");
         echo("<td>$f</td>");
         echo("<td>" . date(DateTime::ISO8601, filemtime($f)) . "</td>");
-        echo("<td><a href='$_SERVER[PHP_SELF]?inputfile=$f&amp;show=all'>all strings</a></td>");
-        echo("<td><a href='$_SERVER[PHP_SELF]?inputfile=$f&amp;show=unfinished'>unfinished strings</a></td>");
-        echo("<td><a href='$_SERVER[PHP_SELF]?inputfile=$f&amp;show=empty'>empty strings</a></td>");
+        echo("<td><a href='$_SERVER[PHP_SELF]?inputfile=$f&amp;show=all'>all strings (" . $status['strings'] . ")</a></td>");
+        echo("<td><a href='$_SERVER[PHP_SELF]?inputfile=$f&amp;show=unfinished'>unfinished strings (" . $status['unfinished'] . ")</a></td>");
+        echo("<td><a href='$_SERVER[PHP_SELF]?inputfile=$f&amp;show=empty'>empty strings (" . $status['empty'] . ")</a></td>");
         echo("</tr>\n");
         $row++;
     }
