@@ -161,15 +161,16 @@ if(!isset($inputfile)) {
     $files = glob("lang/*.ts");
     $row = 0;
     echo("<table>\n");
-    echo("<tr class='header'><td><b>Language</b></td><td>source file timestamp</td><td colspan='3'><b>Edit</b></td></tr>");
+    echo("<tr class='header'><td><b>Language</b></td><td>source file timestamp</td><td colspan='3'><b>Edit</b></td><td>Progress</td></tr>\n");
     foreach($files as $f) {
         $status = create_xml_stats($f);
-        echo("<tr class='c" . $row%2 . "'>");
-        echo("<td>$f</td>");
-        echo("<td>" . date(DateTime::ISO8601, filemtime($f)) . "</td>");
-        echo("<td><a href='$_SERVER[PHP_SELF]?inputfile=$f&amp;show=all'>all strings (" . $status['strings'] . ")</a></td>");
-        echo("<td><a href='$_SERVER[PHP_SELF]?inputfile=$f&amp;show=unfinished'>unfinished strings (" . $status['unfinished'] . ")</a></td>");
-        echo("<td><a href='$_SERVER[PHP_SELF]?inputfile=$f&amp;show=empty'>empty strings (" . $status['empty'] . ")</a></td>");
+        echo("<tr class='c" . $row%2 . "'>\n");
+        echo("<td>$f</td>\n");
+        echo("<td>" . date(DateTime::ISO8601, filemtime($f)) . "</td>\n");
+        echo("<td><a href='$_SERVER[PHP_SELF]?inputfile=$f&amp;show=all'>all strings (" . $status['strings'] . ")</a></td>\n");
+        echo("<td><a href='$_SERVER[PHP_SELF]?inputfile=$f&amp;show=unfinished'>unfinished strings (" . $status['unfinished'] . ")</a></td>\n");
+        echo("<td><a href='$_SERVER[PHP_SELF]?inputfile=$f&amp;show=empty'>empty strings (" . $status['empty'] . ")</a></td>\n");
+        echo("<td><img src='graph.php?p=" . 100 * ($status['strings'] - $status['unfinished']) / $status['strings'] . "'/></td>\n");
         echo("</tr>\n");
         $row++;
     }
