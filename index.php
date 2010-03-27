@@ -114,7 +114,7 @@ function parse_update_xml($tsfile, $mode, $update = 0)
                 echo("</tr>\n");
                 echo("<tr class='$rowclass'>\n");
                 echo("<td></td>\n");
-                echo("<td><textarea rows='3' cols='100' name='translation-$row'>"
+                echo("<td><textarea class='translated' rows='3' cols='100' name='translation-$row'>"
                     ."$translation</textarea></td>\n");
                 echo("</tr>\n");
             }

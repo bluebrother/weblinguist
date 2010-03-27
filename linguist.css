@@ -6,5 +6,6 @@
 .toggle { font-size:x-small; }
 .header { background-color:#729fcf; }
 .statusimg { padding-left:5px; padding-right:5px; }
+.translated { width:100%; border:1px solid #000; }
 table { margin:0px; padding:0px; border-spacing:0px; }
 td { padding:2px; padding-left:1em; padding-right:1em; }
