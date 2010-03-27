@@ -99,18 +99,19 @@ function parse_update_xml($tsfile, $mode, $update = 0)
                 echo("<!-- $row -->\n");
                 echo("<tr class='$rowclass'>");
                 echo("<td>Status</td>");
-                echo("<td><span name='sstatus-$row'>"
-                    . "<img name='istatus-$row' src='$statusimg' "
+                echo("<td><span id='sstatus-$row'>"
+                    . "<img id='istatus-$row' src='$statusimg' alt='status' "
                     . "class='statusimg' />$status</span>");
-                echo("<input type='hidden' name='status-$row' value='$status'/> ");
+                echo("<input type='hidden' id='status-$row' name='status-$row' "
+                    . "value='$status'/> ");
                 if($status == "unfinished")
                     echo("<span class='toggle'>"
                     . "<a href='javascript:toggleStatus(\"$row\");' "
-                    . "name='tstatus-$row'>(mark finished)</a></span>");
+                    . "id='tstatus-$row'>(mark finished)</a></span>");
                 else
                     echo("<span class='toggle'>"
                     . "<a href='javascript:toggleStatus(\"$row\");' "
-                    . "name='tstatus-$row'>(mark unfinished)</a></span>");
+                    . "id='tstatus-$row'>(mark unfinished)</a></span>");
                 echo("</td>");
                 echo("</tr>\n");
                 echo("<tr class='$rowclass'>");
@@ -243,7 +244,7 @@ else {
         echo("<b>showing unfinished (including empty) translations.</b>");
 
     echo("<p><b>Translating file $inputfile</b></p>\n");
-    echo("<form action='$_SERVER[PHP_SELF]' method='POST'>\n");
+    echo("<form action='$_SERVER[PHP_SELF]' method='post'>\n");
     echo("<input type='hidden' name='show' value='$show'/>\n");
     echo("<input type='hidden' name='update' value='true'/>\n");
     echo("<input type='hidden' name='inputfile' value='$inputfile' />\n");
