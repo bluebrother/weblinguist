@@ -92,7 +92,17 @@ function parse_update_xml($tsfile, $mode, $update = 0)
             if($update == 0) {
                 echo("<tr class='$rowclass' >\n");
                 echo("<td>$sourcestring</td>\n");
-                echo("<td>$status</td>\n");
+                if($status == "unfinished")
+                    $statusimg = "dialog-warning.png";
+                else
+                    $statusimg = "dialog-information.png";
+                echo("<td><span name='sstatus-$row'><img name='istatus-$row' src='$statusimg'/>$status</span>");
+                echo("<input type='hidden' name='status-$row' value='$status'/><br/>");
+                if($status == "unfinished")
+                    echo("<span class='toggle'><a href='javascript:toggleStatus(\"$row\");' name='tstatus-$row'>mark finished</a></span>");
+                else
+                    echo("<span class='toggle'><a href='javascript:toggleStatus(\"$row\");' name='tstatus-$row'>mark unfinished</a></span>");
+                echo("</td>\n");
                 echo("<td>$comment</td>\n");
                 echo("</tr>\n");
                 echo("<tr class='$rowclass'>\n");
@@ -108,7 +118,7 @@ function parse_update_xml($tsfile, $mode, $update = 0)
                     // unset the "unfinished" translation type if it contains
                     // text.
                     // FIXME: allow the user to control this.
-                    if($_POST["translation-$row"] != "") {
+                    if($_POST["translation-$row"] != "" && $_POST["status-$row"] == "finished") {
                         // to remove an attribute unset() it.
                         unset($msg->translation['type']);
                     }
@@ -169,10 +179,30 @@ else if(array_key_exists('show', $_POST))
 .c1 { background-color:#aacdee; }
 .location { font-size:x-small; }
 .cr { font-size:x-small; font-color:#ccc; }
+.toggle { font-size:x-small; }
 .header { background-color:#729fcf; }
 table { margin:0px; padding:0px; border-spacing:0px; }
 td { padding:2px; padding-left:1em; padding-right:1em; }
 </style>
+<script type="text/javascript">
+function toggleStatus(element)
+{
+    var s = document.getElementsByName("status-" + element)[0].value;
+    if(s == "unfinished") {
+        document.getElementsByName("status-" + element)[0].value = "finished";
+        document.getElementsByName("istatus-" + element)[0].src = "dialog-information.png";
+        document.getElementsByName("sstatus-" + element)[0].childNodes[1].data = "finished";
+        document.getElementsByName("tstatus-" + element)[0].firstChild.nodeValue = "mark unfinished";
+    }
+    else {
+        document.getElementsByName("status-" + element)[0].value = "unfinished";
+        document.getElementsByName("istatus-" + element)[0].src = "dialog-warning.png";
+        document.getElementsByName("sstatus-" + element)[0].childNodes[1].data = "unfinished";
+        document.getElementsByName("tstatus-" + element)[0].firstChild.nodeValue = "mark finished";
+    }
+}
+
+</script>
 <title><?php echo("Weblinguist: $title"); ?></title>
 </head>
 <body>
