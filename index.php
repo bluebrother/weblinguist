@@ -61,8 +61,7 @@ function parse_update_xml($tsfile, $mode, $update = 0)
         if($classname == "")
             $classname = "(unknown)";
         if($update == 0)
-            echo("<tr><td colspan='5' class='cppclass'>$classname</td></tr>\n");
-
+            echo("\n<tr><td colspan='5' class='cppclass'>$classname</td></tr>\n");
         foreach($child->message as $msg) {
             $status = "(unknown)";
             $sourcestring = preg_replace("/\n/", "<span class='cr'>CR</span><br/>",
@@ -90,8 +89,6 @@ function parse_update_xml($tsfile, $mode, $update = 0)
                 continue;
 
             if($update == 0) {
-                echo("<tr class='$rowclass'>\n");
-                echo("<td>Status</td>");
                 if($status == "unfinished") {
                     $statusimg = "dialog-warning.png";
                 }
@@ -99,23 +96,36 @@ function parse_update_xml($tsfile, $mode, $update = 0)
                     $statusimg = "dialog-information.png";
                     $status = "finished";
                 }
-                echo("<td><span name='sstatus-$row'><img name='istatus-$row' src='$statusimg' class='statusimg' />$status</span>");
+                echo("<!-- $row -->\n");
+                echo("<tr class='$rowclass'>");
+                echo("<td>Status</td>");
+                echo("<td><span name='sstatus-$row'>"
+                    . "<img name='istatus-$row' src='$statusimg' "
+                    . "class='statusimg' />$status</span>");
                 echo("<input type='hidden' name='status-$row' value='$status'/> ");
                 if($status == "unfinished")
-                    echo("<span class='toggle'><a href='javascript:toggleStatus(\"$row\");' name='tstatus-$row'>(mark finished)</a></span>");
+                    echo("<span class='toggle'>"
+                    . "<a href='javascript:toggleStatus(\"$row\");' "
+                    . "name='tstatus-$row'>(mark finished)</a></span>");
                 else
-                    echo("<span class='toggle'><a href='javascript:toggleStatus(\"$row\");' name='tstatus-$row'>(mark unfinished)</a></span>");
-                echo("</td>\n");
-                echo("</tr><tr class='$rowclass'>");
-                echo("<td>String:</td><td>$sourcestring</td>\n");
-                echo("</tr><tr class='$rowclass'>");
-                echo("<td>Comment:</td><td>$comment</td>\n");
-                echo("<tr class='$rowclass'><td>Location:</td><td class='location'>$location</td>\n");
+                    echo("<span class='toggle'>"
+                    . "<a href='javascript:toggleStatus(\"$row\");' "
+                    . "name='tstatus-$row'>(mark unfinished)</a></span>");
+                echo("</td>");
                 echo("</tr>\n");
-                echo("<tr class='$rowclass'>\n");
-                echo("<td></td>\n");
-                echo("<td><textarea class='translated' rows='3' cols='100' name='translation-$row'>"
-                    ."$translation</textarea></td>\n");
+                echo("<tr class='$rowclass'>");
+                echo("<td>String:</td><td>$sourcestring</td>");
+                echo("</tr>\n");
+                echo("<tr class='$rowclass'>");
+                echo("<td>Comment:</td><td>$comment</td>");
+                echo("</tr>\n");
+                echo("<tr class='$rowclass'>");
+                echo("<td>Location:</td><td class='location'>$location</td>");
+                echo("</tr>\n");
+                echo("<tr class='$rowclass'>");
+                echo("<td></td>");
+                echo("<td><textarea class='translated' rows='3' cols='100' "
+                    . "name='translation-$row'>$translation</textarea></td>");
                 echo("</tr>\n");
             }
             else {
@@ -124,7 +134,8 @@ function parse_update_xml($tsfile, $mode, $update = 0)
                     // unset the "unfinished" translation type if it contains
                     // text.
                     // FIXME: allow the user to control this.
-                    if($_POST["translation-$row"] != "" && $_POST["status-$row"] == "finished") {
+                    if($_POST["translation-$row"] != ""
+                        && $_POST["status-$row"] == "finished") {
                         // to remove an attribute unset() it.
                         unset($msg->translation['type']);
                     }
