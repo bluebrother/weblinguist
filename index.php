@@ -178,7 +178,7 @@ else if(array_key_exists('show', $_POST))
 .c0 { background-color:#9abdde; }
 .c1 { background-color:#aacdee; }
 .location { font-size:x-small; }
-.cr { font-size:x-small; font-color:#ccc; }
+.cr { font-size:x-small; color:#ccc; }
 .toggle { font-size:x-small; }
 .header { background-color:#729fcf; }
 table { margin:0px; padding:0px; border-spacing:0px; }
