@@ -167,7 +167,7 @@ else if(array_key_exists('show', $_POST))
 .cppclass { background-color:#ccc; text-align:center; }
 .c0 { background-color:#9abdde; }
 .c1 { background-color:#aacdee; }
-.location { text-size:small; }
+.location { font-size:x-small; }
 .cr { font-size:x-small; font-color:#ccc; }
 .header { background-color:#729fcf; }
 table { margin:0px; padding:0px; border-spacing:0px; }
