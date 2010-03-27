@@ -45,7 +45,7 @@ function create_svn_stats($tsfile)
             $status['rev'] = trim(preg_replace('/^[a-zA-Z ]+:/', '', $line));
         else if(preg_match('/^Last Changed Date/', $line))
             // FIXME: parse date here to allow better formatting.
-            $status['date'] = trim(preg_replace('/^[a-zA-Z ]+:/', '', $line));
+            $status['date'] = strtotime(preg_replace('/^[a-zA-Z ]+:(.+)\(.+\)/', '$1', $line));
 
     }
     fclose($hdl);
@@ -189,7 +189,7 @@ if(!isset($inputfile)) {
         $svnstat = create_svn_stats($f);
         echo("<tr class='c" . $row%2 . "'>\n");
         echo("<td>$f</td>\n");
-        echo("<td>r" . $svnstat['rev'] . " (" . $svnstat['date'] . ")</td>\n");
+        echo("<td>r" . $svnstat['rev'] . " (" . date("Y-m-d", $svnstat['date']) . ")</td>\n");
         echo("<td><a href='$_SERVER[PHP_SELF]?inputfile=$f&amp;show=unfinished'>edit</a></td>\n");
         echo("<td>" . $status['strings'] . "</td>\n");
         echo("<td>" . $status['unfinished'] . "</td>\n");
