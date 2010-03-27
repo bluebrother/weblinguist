@@ -90,26 +90,32 @@ function parse_update_xml($tsfile, $mode, $update = 0)
                 continue;
 
             if($update == 0) {
-                echo("<tr class='$rowclass' >\n");
-                echo("<td>$sourcestring</td>\n");
-                if($status == "unfinished")
+                echo("<tr class='$rowclass'>\n");
+                echo("<td>Status</td>");
+                if($status == "unfinished") {
                     $statusimg = "dialog-warning.png";
-                else
+                }
+                else {
                     $statusimg = "dialog-information.png";
-                echo("<td><span name='sstatus-$row'><img name='istatus-$row' src='$statusimg'/>$status</span>");
-                echo("<input type='hidden' name='status-$row' value='$status'/><br/>");
+                    $status = "finished";
+                }
+                echo("<td><span name='sstatus-$row'><img name='istatus-$row' src='$statusimg' class='statusimg' />$status</span>");
+                echo("<input type='hidden' name='status-$row' value='$status'/> ");
                 if($status == "unfinished")
-                    echo("<span class='toggle'><a href='javascript:toggleStatus(\"$row\");' name='tstatus-$row'>mark finished</a></span>");
+                    echo("<span class='toggle'><a href='javascript:toggleStatus(\"$row\");' name='tstatus-$row'>(mark finished)</a></span>");
                 else
-                    echo("<span class='toggle'><a href='javascript:toggleStatus(\"$row\");' name='tstatus-$row'>mark unfinished</a></span>");
+                    echo("<span class='toggle'><a href='javascript:toggleStatus(\"$row\");' name='tstatus-$row'>(mark unfinished)</a></span>");
                 echo("</td>\n");
-                echo("<td>$comment</td>\n");
+                echo("</tr><tr class='$rowclass'>");
+                echo("<td>String:</td><td>$sourcestring</td>\n");
+                echo("</tr><tr class='$rowclass'>");
+                echo("<td>Comment:</td><td>$comment</td>\n");
+                echo("<tr class='$rowclass'><td>Location:</td><td class='location'>$location</td>\n");
                 echo("</tr>\n");
                 echo("<tr class='$rowclass'>\n");
+                echo("<td></td>\n");
                 echo("<td><textarea rows='3' cols='100' name='translation-$row'>"
                     ."$translation</textarea></td>\n");
-                echo("<td></td>\n");
-                echo("<td class='location'>$location</td>\n");
                 echo("</tr>\n");
             }
             else {
