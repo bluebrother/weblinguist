@@ -173,36 +173,8 @@ else if(array_key_exists('show', $_POST))
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<style class='text/css'>
-.cppclass { background-color:#ccc; text-align:center; }
-.c0 { background-color:#9abdde; }
-.c1 { background-color:#aacdee; }
-.location { font-size:x-small; }
-.cr { font-size:x-small; color:#ccc; }
-.toggle { font-size:x-small; }
-.header { background-color:#729fcf; }
-table { margin:0px; padding:0px; border-spacing:0px; }
-td { padding:2px; padding-left:1em; padding-right:1em; }
-</style>
-<script type="text/javascript">
-function toggleStatus(element)
-{
-    var s = document.getElementsByName("status-" + element)[0].value;
-    if(s == "unfinished") {
-        document.getElementsByName("status-" + element)[0].value = "finished";
-        document.getElementsByName("istatus-" + element)[0].src = "dialog-information.png";
-        document.getElementsByName("sstatus-" + element)[0].childNodes[1].data = "finished";
-        document.getElementsByName("tstatus-" + element)[0].firstChild.nodeValue = "mark unfinished";
-    }
-    else {
-        document.getElementsByName("status-" + element)[0].value = "unfinished";
-        document.getElementsByName("istatus-" + element)[0].src = "dialog-warning.png";
-        document.getElementsByName("sstatus-" + element)[0].childNodes[1].data = "unfinished";
-        document.getElementsByName("tstatus-" + element)[0].firstChild.nodeValue = "mark finished";
-    }
-}
-
-</script>
+<link rel="stylesheet" type="text/css" href="linguist.css" />
+<script type="text/javascript" src="linguist.js"></script>
 <title><?php echo("Weblinguist: $title"); ?></title>
 </head>
 <body>
