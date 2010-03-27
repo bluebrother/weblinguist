@@ -2,7 +2,7 @@
 .c0 { background-color:#9abdde; }
 .c1 { background-color:#aacdee; }
 .location { font-size:x-small; }
-.cr { font-size:x-small; color:#ccc; }
+.cr { font-size:small; color:#888; }
 .toggle { font-size:x-small; }
 .header { background-color:#729fcf; }
 .statusimg { padding-left:5px; padding-right:5px; }

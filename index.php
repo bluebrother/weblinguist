@@ -64,7 +64,7 @@ function parse_update_xml($tsfile, $mode, $update = 0)
             echo("\n<tr><td colspan='5' class='cppclass'>$classname</td></tr>\n");
         foreach($child->message as $msg) {
             $status = "(unknown)";
-            $sourcestring = preg_replace("/\n/", "<span class='cr'>CR</span><br/>",
+            $sourcestring = preg_replace("/\n/", "<span class='cr'>¶</span><br/>",
                 htmlspecialchars($msg->source));
             $locations = $msg->location;
             $location = "";
