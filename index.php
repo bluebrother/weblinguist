@@ -44,7 +44,6 @@ function create_svn_stats($tsfile)
         if(preg_match('/^Last Changed Rev/', $line))
             $status['rev'] = trim(preg_replace('/^[a-zA-Z ]+:/', '', $line));
         else if(preg_match('/^Last Changed Date/', $line))
-            // FIXME: parse date here to allow better formatting.
             $status['date'] = strtotime(preg_replace('/^[a-zA-Z ]+:(.+)\(.+\)/', '$1', $line));
 
     }
