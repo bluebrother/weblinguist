@@ -173,7 +173,8 @@ if(isset($inputfile))
 
 // if we want the updated file send out xml
 if(array_key_exists('update', $_POST)) {
-    header("Content-type: text/xml");
+    $filename = basename($inputfile);
+    header("Content-Disposition: attachment; filename=$filename");
     // update data that has been sent in the POST request
 
     // send out the xml
