@@ -85,7 +85,7 @@ function parse_update_xml($tsfile, $mode, $update = 0)
             $translation = htmlspecialchars($msg->translation);
             $transstatus = $msg->translation->attributes();
             $status = $transstatus['type'];
-            $comment = $msg->comment;
+            $comment = $msg->comment . $msg->extracomment;
             if($comment == "")
                 $comment = "(no translation comment available)";
             $rowclass = "c" . $row%2;
